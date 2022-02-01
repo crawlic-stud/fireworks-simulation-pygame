@@ -1,5 +1,5 @@
 import pygame
-from effects import explosion, explosion
+from effects import explosion
 from Effect import Effect
 from config import *
 
@@ -7,7 +7,7 @@ from config import *
 class App:
     CLOCK = pygame.time.Clock()
     SCREEN = pygame.display.set_mode(SIZE)
-    pygame.display.set_caption('Fireworks demonstration')
+    pygame.display.set_caption('Fireworks simulation')
     
     def __init__(self):
         self.running = True

@@ -9,8 +9,8 @@ def normalize_dy(dx, vector_len):
     return dy
     
 
-def explosion(pos, amount=300, explosion_radius=10, gravity=0.2):
-    particles = [Particle(random.randint(3, 7), pos, (random.randint(150, 255), random.randint(150, 255), random.randint(150, 255))) for _ in range(amount)]
+def explosion(pos, amount=300, explosion_radius=7, gravity=0.2):
+    particles = [Particle(random.randint(2, 4), pos, (random.randint(150, 255), random.randint(150, 255), random.randint(150, 255))) for _ in range(amount)]
 
     for i, particle in enumerate(particles):
 
@@ -21,6 +21,6 @@ def explosion(pos, amount=300, explosion_radius=10, gravity=0.2):
         particles[i].direction = dx, dy
         particles[i].shrink_speed = random.random() / 2
         particles[i].gravity = gravity
-        particles[i].trace_shrink_speed = random.randint(50, 100) / 100
+        particles[i].trace_shrink_speed = random.randint(30, 50) / 100
 
     return particles
