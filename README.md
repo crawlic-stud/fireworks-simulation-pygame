@@ -1,8 +1,9 @@
-### Fireworks simulation ###
+## Fireworks simulation ##
+unfortunately very laggy :( 
 ***
 ![](firework.gif)
 ***
-####How to run: ####
+#### How to run: ####
 ```
 pip install pygame
 ```
