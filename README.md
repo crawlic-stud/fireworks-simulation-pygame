@@ -1,3 +1,11 @@
 ### Fireworks simulation ###
 ***
-Run main.py and click
+![](firework.gif)
+***
+####How to run: ####
+```
+pip install pygame
+```
+```
+python src/main.py
+```

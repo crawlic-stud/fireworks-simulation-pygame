@@ -7,8 +7,8 @@ class Particle:
         self.radius = radius
         self.x, self.y = pos
         self.color = color
-        self.direction = None
-        self.shrink_speed = None
+        self.direction = 0, 0
+        self.shrink_speed = 0
 
         self.gravity = 0
         self.vertical_speed = self.gravity
@@ -16,12 +16,12 @@ class Particle:
         self.trace_shrink_speed = 0
 
     def shrink(self):
-        if self.shrink_speed is None:
+        if not self.shrink_speed:
             return
         self.radius -= self.shrink_speed
 
     def move(self):
-        if self.direction is None:
+        if not any(self.direction):
             return
         self.x += self.direction[0]
         self.y += self.direction[1]
