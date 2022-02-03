@@ -4,6 +4,10 @@ from effects import explosion, launch
 from Effect import Effect
 from config import *
 pygame.init()
+pygame.mixer.init()
+
+
+explosion_sounds = [pygame.mixer.Sound('sounds/explosion_long.wav'), pygame.mixer.Sound('sounds/explosion_short.wav')]
 
 
 class App:
@@ -48,6 +52,7 @@ class App:
                                                       ball_lifespan=5,
                                                       trace_lifespan=trace_lifespan,
                                                       gravity=0.1))
+                random.choice(explosion_sounds).play()
 
         self.firework_effect.draw(self.SCREEN)
         self.launch_effect.draw(self.SCREEN)
