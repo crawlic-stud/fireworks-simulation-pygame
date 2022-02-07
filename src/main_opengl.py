@@ -1,7 +1,5 @@
 import numpy as np
 import pygame
-from effects import explosion
-from Effect import Effect
 from config import *
 from OpenGL.GL import *
 from OpenGL.GL.shaders import compileShader, compileProgram
@@ -18,12 +16,12 @@ with open("fragment.glsl", 'r') as f:
 class App:
     CLOCK = pygame.time.Clock()
     SCREEN = pygame.display.set_mode(SIZE, pygame.DOUBLEBUF | pygame.OPENGL)
-    pygame.display.set_caption('Fireworks simulation')
+    pygame.display.set_caption('i dont even know')
 
     def __init__(self):
         self.running = True
 
-        self.refactor = None
+        self.polygon = None
         self.triangle_buffer = None
         self.buffer_data = None
 
@@ -45,7 +43,7 @@ class App:
         glClearColor(*[color / 255 for color in BACKGROUND], 1)
 
         # create array
-        self.refactor = np.array([
+        self.polygon = np.array([
             # x   y    z       r         g          b
             1.0, 1.0, 0.0, 52 / 255, 178 / 255, 152 / 255,
             -0.5, -0.5, 0.0, 57 / 255, 151 / 255, 211 / 255,
@@ -60,10 +58,10 @@ class App:
         glBindBuffer(GL_ARRAY_BUFFER, self.triangle_buffer)
 
         # load array data to buffer
-        glBufferData(GL_ARRAY_BUFFER, self.refactor.nbytes, self.refactor, GL_STATIC_DRAW)
+        glBufferData(GL_ARRAY_BUFFER, self.polygon.nbytes, self.polygon, GL_STATIC_DRAW)
 
         # read buffer data
-        self.buffer_data = glGetBufferSubData(GL_ARRAY_BUFFER, 0, self.refactor.nbytes)
+        self.buffer_data = glGetBufferSubData(GL_ARRAY_BUFFER, 0, self.polygon.nbytes)
 
         # compile vertex shader
         vertex_shader = compileShader(vertex_src, GL_VERTEX_SHADER)
@@ -79,11 +77,11 @@ class App:
 
         # vertex positions -> vertex shader
         glEnableVertexAttribArray(0)
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, self.refactor.itemsize * 6, ctypes.c_void_p(0))
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, self.polygon.itemsize * 6, ctypes.c_void_p(0))
 
         # color -> vertex shader
         glEnableVertexAttribArray(1)
-        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, self.refactor.itemsize * 6, ctypes.c_void_p(self.refactor.itemsize * 3))
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, self.polygon.itemsize * 6, ctypes.c_void_p(self.polygon.itemsize * 3))
 
     def run(self):
         self.setup()
