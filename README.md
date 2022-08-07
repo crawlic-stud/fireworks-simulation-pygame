@@ -1,8 +1,8 @@
-## Fireworks simulation ##
-unfortunately very laggy :( 
-***
+# Fireworks simulation #
+## Quite laggy and simple but satisfying firework simulation in pygame with sound effects ##
+
 ![](firework.gif)
-***
+
 #### How to run: ####
 
 ```
