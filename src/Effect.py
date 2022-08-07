@@ -3,7 +3,7 @@ from config import WIDTH, HEIGHT
 
 
 class Effect:
-    def __init__(self):
+    def __init__(self, trace_delay=0):
         self.particles = []
 
     def append(self, particles_array):
@@ -18,10 +18,14 @@ class Effect:
             self.particles.remove(particle)
 
     def add_trace(self, particle):
-        self.particles += [particle.trace()] if particle.trace_shrink_speed else []
+        if particle.trace_shrink_speed > 0:
+            trace = particle.trace()
+            if trace is None:
+                return
+            self.particles.append(trace)
 
     def draw(self, screen):
         for particle in self.particles:
             self.add_trace(particle)
             self.remove_particle(particle)
-            particle.draw(screen)
+            particle.update(screen)

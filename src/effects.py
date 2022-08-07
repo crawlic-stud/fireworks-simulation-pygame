@@ -10,8 +10,12 @@ def normalize_dy(dx, vector_len):
     return dy
     
 
-def explosion(pos, amount=100, explosion_radius=7, ball_radius=3, gravity=0.2, ball_lifespan=5, trace_lifespan=1):
-    particles = [Particle(ball_radius, pos, (random.randint(150, 255), random.randint(150, 255), random.randint(150, 255))) for _ in range(amount)]
+def explosion(pos, amount=100, explosion_radius=7, ball_radius=3, gravity=0.2,
+              ball_lifespan=5, trace_lifespan=1, particle_class=Particle,
+              trace_delay=0):
+
+    color = (random.randint(150, 255), random.randint(150, 255), random.randint(150, 255))
+    particles = [particle_class(ball_radius, pos, color) for _ in range(amount)]
 
     for i, particle in enumerate(particles):
 
@@ -23,12 +27,13 @@ def explosion(pos, amount=100, explosion_radius=7, ball_radius=3, gravity=0.2, b
         particles[i].shrink_speed = random.random() / ball_lifespan
         particles[i].gravity = gravity
         particles[i].trace_shrink_speed = random.randint(30, 50) / 100 / trace_lifespan
+        particles[i].trace_delay = trace_delay
 
     return particles
 
 
-def launch(x_pos, amount=10, gravity=0.1):
-    particles = [Particle(random.randint(2, 3), (x_pos, HEIGHT), (255, 204, 102)) for _ in range(amount)]
+def launch(x_pos, amount=10, gravity=0.1, radius=2, particle_class=Particle, trace_delay=0):
+    particles = [particle_class(radius, (x_pos, HEIGHT), (255, 204, 102)) for _ in range(amount)]
 
     for i, particle in enumerate(particles):
 
@@ -39,5 +44,6 @@ def launch(x_pos, amount=10, gravity=0.1):
         particles[i].shrink_speed = random.random() / 100
         particles[i].gravity = gravity
         particles[i].trace_shrink_speed = random.randint(30, 50) / 500
+        particles[i].trace_delay = trace_delay
 
     return particles

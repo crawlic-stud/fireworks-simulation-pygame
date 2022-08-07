@@ -1,8 +1,11 @@
 import random
+
 import pygame
+
 from effects import explosion, launch
 from Effect import Effect
 from config import *
+
 pygame.init()
 pygame.mixer.init()
 
@@ -32,7 +35,8 @@ class App:
             if not self.mouse_press:
                 self.launch_effect.append(launch(x_pos=mouse_pos[0],
                                                  amount=3,
-                                                 gravity=0.15))
+                                                 gravity=0.15,
+                                                 trace_delay=0))
                 self.mouse_press = True
         else:
             self.mouse_press = False
@@ -41,17 +45,19 @@ class App:
             if particle.vertical_speed > abs(particle.direction[1]):
                 self.launch_effect.particles.remove(particle)
 
-                trace_lifespan = random.randint(1, 3)
-                ball_radius = random.randint(3, 4)
-                explosion_radius = random.randint(6, 8)
-                amount = random.randint(100, 120)
+                trace_lifespan = random.randint(1, 1)
+                ball_radius = random.randint(5, 8)
+                ball_lifespan = 3
+                explosion_radius = random.randint(4, 6)
+                amount = random.randint(150, 200)
                 self.firework_effect.append(explosion(pos=(particle.x, particle.y),
                                                       amount=amount,
                                                       explosion_radius=explosion_radius,
                                                       ball_radius=ball_radius,
-                                                      ball_lifespan=5,
+                                                      ball_lifespan=ball_lifespan,
                                                       trace_lifespan=trace_lifespan,
-                                                      gravity=0.1))
+                                                      gravity=0.05,
+                                                      trace_delay=999))
                 random.choice(explosion_sounds).play()
 
         self.firework_effect.draw(self.SCREEN)
@@ -61,7 +67,7 @@ class App:
 
     def run(self):
         while self.running:
-            print(f'Particles on screen: {len(self.firework_effect.particles)}')
+            print(f'Particles on screen: {len(self.firework_effect.particles) + len(self.launch_effect.particles)}')
             self.update()
 
 
